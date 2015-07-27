@@ -1,8 +1,20 @@
-<% @posts.reverse.each do |post| %>
-<div style="border: 1px solid #ffffff">
-  <p><img src="<%= post.image_url(:thumb) %>"></p>
-  <h4><a href="/foods/show/<%= post.id %>"><%= post.title %></a> [<%= post.comments.count %>]</h4>
-  <p style="color: #ff0000"><%= post.category %></p>
-  <p><strong><%= post.user.username %></strong></p>
+<div class="container">
+	<% @posts.reverse.each do |post| %>
+	<div class="row">
+		<div class="panel panel-danger">
+		  <div class="panel-heading">
+		  	<h5 class="panel_title"><a href="/foods/show/<%= post.id %>"><%= post.title %></a><span class="badge"><%= post.comments.count %></span></h5>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-6">
+				  <p class="text-center"><img class="img-rounded" src="<%= post.image_url(:thumb) %>"></p>
+				</div>
+				<div class="col-md-6">
+					<p style="color: #ff0000"><span class="label label-warning"><%= post.category %></span></p>
+					<p><strong><%= post.user.username %></strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% end %>		
 </div>
-<% end %>
