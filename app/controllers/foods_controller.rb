@@ -57,5 +57,12 @@ class FoodsController < ApplicationController
   end
 
   def delete_complete
+		post = Post.find_by_id(params[:id])
+		if post && post.destroy
+			flash[:alert] = "삭제되었습니다."
+		else
+      flash[:alert] = "삭제 실패"
+		end
+    redirect_to "/"
   end
 end
