@@ -46,6 +46,10 @@ class FoodsController < ApplicationController
 
   def edit
 		@post = Post.find(params[:id])
+		if @post.user_id != session[:user_id]
+			flash[:alert] = '수정 권한이 없습니다.'
+			redirect_to :back
+		end
   end
 
   def edit_complete
@@ -64,12 +68,16 @@ class FoodsController < ApplicationController
 
   def delete_complete
 		post = Post.find_by_id(params[:id])
-		if post && post.destroy
+		if post && post.user_id == session[:user_id]
+			Comment.where(post_id: params[:id]).destroy_all
+			
+			post.destroy
 			flash[:alert] = "삭제되었습니다."
+    	redirect_to "/"
 		else
-      flash[:alert] = "삭제 실패"
+      flash[:alert] = "삭제 실패 또는 권한 없음!!!"
+    	redirect_to :back
 		end
-    redirect_to "/"
   end
 
   def write_comment_complete
@@ -85,11 +93,15 @@ class FoodsController < ApplicationController
 
   def delete_comment_complete
     comment = Comment.find_by_id(params[:id])
-    comment.destroy
-    flash[:alert] = "댓글이 삭제되었습니다."
-    redirect_to "/foods/show/#{comment.post_id}"
-  end
-
+    if comment.user_id == session[:user_id]
+      comment.destroy
+      flash[:alert] = "댓글이 삭제되었습니다."
+      redirect_to "/foods/show/#{comment.post_id}"
+    else
+      flash[:alert] = "해당 댓글의 삭제 권한이 없습니다."
+      redirect_to :back
+    end
+	end
 end
 
 
