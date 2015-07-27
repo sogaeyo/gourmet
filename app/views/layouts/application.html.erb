@@ -2,11 +2,13 @@
 <html>
 <head>
   <title>Gourmet</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<h4><a href="/">Codelion 맛집 평가</a> || <a href="/korean">한식</a> | <a href="/japanese">일식</a> | <a href="/chinese">중식</a> | <a href="/western">양식</a></h4>
 
 <%= yield %>
 
